@@ -1,4 +1,4 @@
-.PHONY: help infra-clean infra-rebuild infra-show-containers infra-show-images infra-show-logs infra-stop infra-up
+.PHONY: help infra-clean infra-rebuild infra-show-containers infra-show-images infra-show-logs infra-stop infra-up run run-client run-server
 
 default: help
 
@@ -28,3 +28,12 @@ infra-stop: ## to stop all the containers
 
 infra-up: ## to create and start all the containers
 	docker-compose up --build -d
+
+run: ## to run the app
+	$(MAKE) run-client | $(MAKE) run-server
+
+run-client: ## to run the client
+	yarn --cwd ./client start
+
+run-server: ## to run the server
+	cd server; go build -o server; ./server
